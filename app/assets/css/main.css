@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+    --color-brand-50: #f7f8fc;
+    --color-brand-100: #eef1f8;
+    --color-brand-200: #dde0f5;
+    --color-brand-300: #c2a5f0;
+    --color-brand-400: #a085f0;
+    --color-brand-500: #5046e5;
+    --color-brand-600: #3b32f6;
+    --color-brand-700: #2a25e6;
+    --color-brand-800: #1a10e6;
+    --color-brand-900: #0a0a86;
+
+    --color-canvas-bg: #f7f8fc;
+    --color-card-bg: #ffffff;
+    --color-sidebar-bg: #eef1f8;
+
+    --color-ink-primary: #0f1419;
+    --color-ink-secondary: #6b7280;
+    --color-ink-regular: #dde0f5;
+    --color-ink-placeholder: #d1d5db;
+    --border-subtle: #e7e7ea;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --radius-card: 12px;
+    --radius-pill: 24px;
+    --font-family: Inter, system-ui, sans-serif;
+}
