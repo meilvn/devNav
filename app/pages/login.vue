@@ -106,6 +106,9 @@
   </div>
 </template>
 <script lang="ts" setup>
+definePageMeta({
+  layout: false,
+});
 const state = reactive({
   email: "",
   password: "",

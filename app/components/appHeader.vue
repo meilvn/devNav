@@ -1,12 +1,14 @@
 <template>
-  <UHeader :ui="{ container: 'max-w-none' }">
+  <UHeader :ui="{ container: 'max-w-none' }" class="border-t border-slate-50">
     <template #title>
-      <Logo class="h-6 w-auto" />
+      <!-- <Logo class="h-6 w-auto" /> -->
+       logo
     </template>
 
     <UNavigationMenu :items="items" />
 
     <template #right>
+
       <UColorModeButton class="cursor-pointer" />
 
       <UButton
@@ -43,6 +45,7 @@
   </UHeader>
 </template>
 <script setup lang="ts">
+
 const isAuthenticated = ref(true);
 
 const items = ref([
@@ -52,7 +55,7 @@ const items = ref([
   },
   {
     label: "提交推荐",
-    to: "/about",
+    to: "/submit",
   },
   {
     label: "文档",
