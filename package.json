@@ -10,7 +10,8 @@
     "postinstall": "nuxt prepare",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx seed.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.17.4",
@@ -23,6 +24,9 @@
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.31.10"
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
+    "drizzle-seed": "^0.3.1",
+    "tsx": "^4.23.1"
   }
 }

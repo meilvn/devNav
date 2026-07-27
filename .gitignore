@@ -1,6 +1,6 @@
 # Nuxt dev/build outputs
 .output
-.data
+# .data
 .nuxt
 .nitro
 .cache
@@ -19,8 +19,8 @@ logs
 .idea
 
 # Local env files
-.env
-.env.*
+# .env
+# .env.*
 !.env.example
 
 package-lock.json
