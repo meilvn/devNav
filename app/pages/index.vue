@@ -8,10 +8,10 @@
         activeColor="primary"
         variant="outline"
         activeVariant="solid"
-        :active="currentCategory === item.value"
-        :key="item.value"
+        :active="currentCategory === item.name"
+        :key="item.name"
         class="font-bold rounded-full cursor-pointer"
-        >{{ item.label }}</UButton
+        >{{ item.name }}</UButton
       >
     </div>
     <div class="grid xl:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4">
@@ -30,24 +30,7 @@
   </div>
 </template>
 <script setup lang="ts">
-const categorys = ref([
-  {
-    label: "全部",
-    value: "all",
-  },
-  {
-    label: "前端",
-    value: "frontend",
-  },
-  {
-    label: "后端",
-    value: "backend",
-  },
-  {
-    label: "工具",
-    value: "tools",
-  },
-]);
+const { data: categorys } = await useFetch("/api/categories");
 const currentCategory = ref("all");
 const bookmarks = ref<any[]>([]);  // todo: 定义 Bookmark 类型
 

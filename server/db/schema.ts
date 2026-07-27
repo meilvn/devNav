@@ -7,3 +7,16 @@ export const categories = sqliteTable('categories', {
     sort: integer('sort').default(0),
     icon: text('icon').notNull(),
 })
+
+export const friendLinkStatus = {
+    PENDING: 0,
+    PUBLISHED: 1,
+}
+export type FriendLinkStatus = (typeof friendLinkStatus)[keyof typeof friendLinkStatus]
+export const friendLinks = sqliteTable('friend_links', {
+    id: integer('id').primaryKey({autoIncrement: true}),
+    name: text('name').notNull(),
+    url: text('url').notNull(),
+    status: integer('status').default(friendLinkStatus.PENDING),
+})
+
