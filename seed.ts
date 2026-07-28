@@ -72,14 +72,14 @@ async function mockFriendLinks() {
 }
 
 const TAG_POOL = [
-  "#vue",
-  "#react",
-  "#angular",
-  "#svelte",
-  "#nuxt",
-  "#node",
-  "#typescript",
-  "#javascript",
+  "vue",
+  "react",
+  "angular",
+  "svelte",
+  "nuxt",
+  "node",
+  "typescript",
+  "javascript",
 ];
 function pickRandomItems(arr, count) {
   const shuffled = [...arr];

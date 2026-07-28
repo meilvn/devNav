@@ -1,3 +1,4 @@
+// 防抖函数
 export function debounce(func: Function, delay: number) {
   let timer: any = null;
   return function (...args: any[]) {
