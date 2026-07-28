@@ -9,17 +9,12 @@
 
     <div class="flex items-center gap-2">
       <p class="text-muted text-sm font-bold">友情链接:</p>
-      <UButton
-        v-for="item in friendLinks"
-        class="text-dimmed"
-        :key="item.label"
-        :to="item.to"
-        variant="link"
-      >
-        {{ item.label }}
-      </UButton>
+      <template v-if="friendLinks && friendLinks.length">
+        <UButton v-for="item in friendLinks" class="text-dimmed" :key="item.id" :to="item.url" variant="link">
+          {{ item.name }}
+        </UButton>
+      </template>
     </div>
-
     <template #right>
       <p class="text-muted text-sm">
         Copyright © {{ year }}
@@ -30,18 +25,6 @@
 <script setup lang="ts">
 const year = useState('copyright-year', () => new Date().getFullYear());
 
-const friendLinks = ref([
-  {
-    label: "Nuxt",
-    to: "https://nuxt.com",
-  },
-  {
-    label: "Nuxt.js",
-    to: "https://nuxtjs.org",
-  },
-  {
-    label: "Nuxt 3",
-    to: "https://nuxt3.org",
-  },
-]);
+const { data: friendLinks } = await useFetch('/api/friend-links');
+
 </script>

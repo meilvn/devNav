@@ -16,5 +16,11 @@ export default defineNuxtConfig({
   },
   ui: {
     fonts: false
-  }
+  },
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
+  ],
 })

@@ -16,11 +16,12 @@ const client = createClient({
 const db = drizzle(client, { schema });
 
 async function main() {
-
   // 模拟categories
   await mockCategories();
   // 模拟friendLinks
   await mockFriendLinks();
+  // 模拟navigations
+  await mockNavigations();
 }
 
 async function mockCategories() {
@@ -52,7 +53,73 @@ async function mockCategories() {
 
 async function mockFriendLinks() {
   await db.delete(schema.friendLinks);
-  await seed(db as any, {friendLinks: schema.friendLinks}, {count: 4});
+  await seed(
+    db as any,
+    { friendLinks: schema.friendLinks },
+    { count: 4 },
+  ).refine((funcs) => ({
+    friendLinks: {
+      columns: {
+        status: funcs.valuesFromArray({
+          values: [
+            schema.friendLinkStatus.PENDING,
+            schema.friendLinkStatus.PUBLISHED,
+          ],
+        }),
+      },
+    },
+  }));
+}
+
+const TAG_POOL = [
+  "#vue",
+  "#react",
+  "#angular",
+  "#svelte",
+  "#nuxt",
+  "#node",
+  "#typescript",
+  "#javascript",
+];
+function pickRandomItems(arr, count) {
+  const shuffled = [...arr];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled.slice(0, count);
+}
+
+const TAG_COMBINATIONS = Array.from({ length: 100 }, () => {
+  const count = Math.floor(Math.random() * 4) + 1; // 1~4 个标签
+  return pickRandomItems(TAG_POOL, count).join(',');
+});
+
+async function mockNavigations() {
+  await db.delete(schema.navigations);
+  const categories = await db
+    .select({ id: schema.categories.id })
+    .from(schema.categories);
+  const categoryIds = categories.map((c) => c.id);
+  await seed(
+    db as any,
+    { navigations: schema.navigations },
+    { count: 30 },
+  ).refine((funcs) => ({
+    navigations: {
+      columns: {
+        category_id: funcs.valuesFromArray({ values: categoryIds }),
+        status: funcs.valuesFromArray({
+          values: [
+            schema.navigationStatus.PENDING,
+            schema.navigationStatus.PUBLISHED,
+            schema.navigationStatus.REJECTED,
+          ],
+        }),
+         tags: funcs.valuesFromArray({ values: TAG_COMBINATIONS })
+      },
+    },
+  }));
 }
 
 main();
