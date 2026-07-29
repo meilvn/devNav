@@ -55,7 +55,7 @@ const items = ref([
   },
   {
     label: "提交推荐",
-    to: "/submit",
+    to: "/recommend",
   },
   {
     label: "文档",

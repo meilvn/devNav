@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center gap-4 border border-subtle p-4 rounded-md">
+    <div class="flex items-center gap-4 border border-subtle p-4 rounded-md h-[164px]">
         <USkeleton class="size-12" />
         <div>
             <USkeleton class="h-8 w-full" />

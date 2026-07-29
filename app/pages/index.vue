@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Hero />
     <div class="flex items-center gap-2 mb-4">
       <UButton
         size="lg"
@@ -33,9 +34,9 @@
       >
     </div>
     <div class="grid xl:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
-      <CategorySkeleton v-if="loading" v-for="item in 4" :key="item" />
+      <CategorySkeleton v-show="pending" v-for="item in 4" :key="item" />
       <CategoryCard
-        v-else
+        v-show="!pending"
         v-for="item in navigationList"
         :key="item.id"
         :category="item"
@@ -44,8 +45,9 @@
   </div>
 </template>
 <script setup lang="ts">
-const { data: categorys } = await useFetch("/api/categories");
-const { navigationList, loading, switchCategory } = useNavigation();
+const { data: categorys } = useFetch("/api/categories");
+const { navigationList, pending, switchCategory } = useNavigation();
+console.log(navigationList.value);
 const currentCategory = ref(-1);
 
 useSeoMeta({
@@ -53,6 +55,4 @@ useSeoMeta({
   description:
     "A navigation tool for developers to quickly access various resources and tools.",
 });
-
-onMounted(() => {});
 </script>
