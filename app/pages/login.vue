@@ -1,9 +1,13 @@
 <template>
   <div class="min-h-screen flex bg-canvas-bg">
-    <aside class="hidden lg:flex w-[600px] flex-col text-white bg-gradient-to-b from-primary to-[#3730A3] p-14">
+    <aside
+      class="hidden lg:flex w-[600px] flex-col text-white bg-gradient-to-b from-primary to-[#3730A3] p-14"
+    >
       <!-- logo -->
       <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-lg bg-white/15 grid place-items-center font-bold">
+        <div
+          class="h-9 w-9 rounded-lg bg-white/15 grid place-items-center font-bold"
+        >
           D
         </div>
         <div class="font-bold text-xl">DevNav</div>
@@ -47,26 +51,56 @@
         </template>
         <UForm :state="state" class="space-y-5" @submit="onSubmit">
           <UFormField label="邮箱地址" name="email">
-            <UInput v-model="state.email" placeholder="you@example.com" size="lg" class="w-full" />
+            <UInput
+              v-model="state.email"
+              placeholder="you@example.com"
+              size="lg"
+              class="w-full"
+            />
           </UFormField>
 
           <UFormField label="密码" name="password">
-            <UInput v-model="state.password" type="password" placeholder="••••••••" size="lg" class="w-full" />
+            <UInput
+              v-model="state.password"
+              type="password"
+              placeholder="••••••••"
+              size="lg"
+              class="w-full"
+            />
           </UFormField>
 
           <div class="flex justify-between items-center">
             <UCheckbox size="md" label="记住我" v-model="state.remember" />
-            <UButton size="md" color="primary" variant="link" class="cursor-pointer">忘记密码？
+            <UButton
+              size="md"
+              color="primary"
+              variant="link"
+              class="cursor-pointer"
+              >忘记密码？
             </UButton>
           </div>
           <div class="flex justify-between">
-            <UButton block size="xl" color="primary" :loading="isLoading" type="submit" class="cursor-pointer">登录
+            <UButton
+              block
+              size="xl"
+              color="primary"
+              :loading="isLoading"
+              type="submit"
+              class="cursor-pointer"
+              >登录
             </UButton>
           </div>
           <USeparator label="或" />
           <div class="flex items-center justify-center">
             <span class="text-ink-secondary text-sm">还没有账号？</span>
-            <UButton size="lg" type="button" variant="link" class="cursor-pointer p-0 font-bold" @click="navigateTo('/register')">立即注册</UButton>
+            <UButton
+              size="lg"
+              type="button"
+              variant="link"
+              class="cursor-pointer p-0 font-bold"
+              @click="navigateTo('/register')"
+              >立即注册</UButton
+            >
           </div>
         </UForm>
       </UCard>
@@ -78,7 +112,7 @@ definePageMeta({
   layout: false,
 });
 
-const auth = useAuth();
+const auth: any = useAuth();
 const toast = useToast();
 const state = reactive({
   email: "",
@@ -89,21 +123,33 @@ const isLoading = ref(false);
 
 const onSubmit = async () => {
   isLoading.value = true;
-  const { error } = await auth.signIn.email({
-    email: state.email,
-    password: state.password,
-  });
-  isLoading.value = false;
-  if (error) {
+  try {
+    const { error } = await auth.signIn.email({
+      email: state.email,
+      password: state.password,
+      rememberMe: state.remember,
+    });
+    isLoading.value = false;
+    if (error) {
+      toast.add({
+        title: "登录失败",
+        description: error.message || "请检查邮箱和密码是否正确",
+        color: "error",
+        icon: "material-symbols:cancel-outline-rounded",
+        progress: false,
+      });
+    } else {
+      navigateTo("/");
+    }
+  } catch (err: any) {
+    isLoading.value = false;
     toast.add({
       title: "登录失败",
-      description: error.message || "请检查邮箱和密码是否正确",
+      description: "网络异常，请稍后重试",
       color: "error",
-      icon: 'material-symbols:cancel-outline-rounded',
+      icon: "material-symbols:cancel-outline-rounded",
       progress: false,
     });
-  } else {
-    navigateTo("/");
   }
 };
 </script>

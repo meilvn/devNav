@@ -89,3 +89,5 @@ await auth.signUp({
   password: '123456',
   role: 'user',
 })
+
+# 有几个问题未解决： 1、better-auth的默认路由没法修改

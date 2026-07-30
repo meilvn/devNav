@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import { seed } from "drizzle-seed";
 import * as schema from "./server/db/schema";
+import { auth } from "./server/auth";
 // 加载环境变量
 import "dotenv/config";
 
@@ -23,7 +24,7 @@ async function main() {
   // 模拟navigations
   await mockNavigations();
   // 模拟users
-  await mockUsers();
+  await seedUsers();
 }
 
 async function mockCategories() {
@@ -124,13 +125,36 @@ async function mockNavigations() {
   }));
 }
 
-async function mockUsers() {
-  await db.delete(schema.users);
-  await seed(
-    db as any,
-    { users: schema.users },
-    { count: 5 },
-  );
+export async function seedUsers() {
+
+  await db.delete(schema.session);
+  await db.delete(schema.account);
+  await db.delete(schema.verification);
+  await db.delete(schema.user);
+
+  const users = [
+    { email: "admin@example.com", password: "admin123456", name: "admin", role: "admin" },
+    { email: "user@example.com", password: "user123456", name: "user", role: "user" },
+  ];
+
+  for (const u of users) {
+    try {
+      await auth.api.signUpEmail({
+        body: {
+          email: u.email,
+          password: u.password,
+          name: u.name,
+          role: u.role,
+        },
+      });
+      
+      // 如果 role 是 additionalField，注册后更新
+      // 或者通过 databaseHooks 在创建时自动设置
+    } catch (e) {
+      // 用户已存在时会报错，忽略即可
+      console.log(e);
+    }
+  }
 }
 
 main();

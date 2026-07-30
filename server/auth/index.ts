@@ -43,32 +43,32 @@ export const auth = betterAuth({
     joins: true,
   },
 
-  routes: {
-    signUp: "/register",
-    signIn: "/login",
-    getSession: "/session",
-    signOut: "/logout",
-  },
+  // routes: {
+  //   signUp: "/register",
+  //   signIn: "/login",
+  //   getSession: "/session",
+  //   signOut: "/logout",
+  // },
 
-  // ✅ 核心：重写所有接口端点路径（表单提交API）
-  endpoints: {
-    // 邮箱密码登录接口：默认 /sign-in/email → 改为 /login
-    signInEmail: {
-      path: "/login",
-    },
-    // 邮箱注册接口：默认 /sign-up/email → 改为 /register
-    signUpEmail: {
-      path: "/register",
-    },
-    // 退出登录
-    signOut: {
-      path: "/logout",
-    },
-    // 获取会话
-    getSession: {
-      path: "/session",
-    },
-  },
+  // // ✅ 核心：重写所有接口端点路径（表单提交API）
+  // endpoints: {
+  //   // 邮箱密码登录接口：默认 /sign-in/email → 改为 /login
+  //   signInEmail: {
+  //     path: "/login",
+  //   },
+  //   // 邮箱注册接口：默认 /sign-up/email → 改为 /register
+  //   signUpEmail: {
+  //     path: "/register",
+  //   },
+  //   // 退出登录
+  //   signOut: {
+  //     path: "/logout",
+  //   },
+  //   // 获取会话
+  //   getSession: {
+  //     path: "/session",
+  //   },
+  // },
 });
 
 export type Session = typeof auth.$Infer.Session;
