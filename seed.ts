@@ -22,6 +22,8 @@ async function main() {
   await mockFriendLinks();
   // 模拟navigations
   await mockNavigations();
+  // 模拟users
+  await mockUsers();
 }
 
 async function mockCategories() {
@@ -120,6 +122,15 @@ async function mockNavigations() {
       },
     },
   }));
+}
+
+async function mockUsers() {
+  await db.delete(schema.users);
+  await seed(
+    db as any,
+    { users: schema.users },
+    { count: 5 },
+  );
 }
 
 main();
