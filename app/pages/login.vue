@@ -49,7 +49,7 @@
             </p>
           </div>
         </template>
-        <UForm :state="state" class="space-y-5" @submit="onSubmit">
+        <UForm :schema="schema":state="state" class="space-y-5" @submit="onSubmit">
           <UFormField label="邮箱地址" name="email">
             <UInput
               v-model="state.email"
@@ -75,6 +75,7 @@
               size="md"
               color="primary"
               variant="link"
+              @click="navigateTo('/resetPwd')"
               >忘记密码？
             </UButton>
           </div>
@@ -106,12 +107,19 @@
   </div>
 </template>
 <script lang="ts" setup>
+import * as z from 'zod'
+
 definePageMeta({
   layout: false,
 });
 
 const auth: any = useAuth();
-const toast = useToast();
+const { showErrorToast } = useToastExtras();
+const schema = z.object({
+  email: z.email('请输入有效的邮箱地址'),
+  password: z.string().refine(val => val.length > 0, '请输入密码').min(8, '密码长度不能少于8位')
+})
+
 const state = reactive({
   email: "",
   password: "",
@@ -129,25 +137,13 @@ const onSubmit = async () => {
     });
     isLoading.value = false;
     if (error) {
-      toast.add({
-        title: "登录失败",
-        description: error.message || "请检查邮箱和密码是否正确",
-        color: "error",
-        icon: "material-symbols:cancel-outline-rounded",
-        progress: false,
-      });
+      showErrorToast("登录失败", "请检查邮箱和密码是否正确");
     } else {
       navigateTo("/");
     }
   } catch (err: any) {
     isLoading.value = false;
-    toast.add({
-      title: "登录失败",
-      description: "网络异常，请稍后重试",
-      color: "error",
-      icon: "material-symbols:cancel-outline-rounded",
-      progress: false,
-    });
+    showErrorToast("登录失败", "网络异常，请稍后重试");
   }
 };
 </script>

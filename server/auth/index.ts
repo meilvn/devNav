@@ -2,6 +2,8 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter"; // 注意包名
 import { db } from "../utils/db";
+import { emailOTP } from "better-auth/plugins";
+import { sendResetEmail } from "../utils/mail";
 
 export const auth = betterAuth({
   // 使用 drizzleAdapter，传入 db 实例
@@ -16,11 +18,9 @@ export const auth = betterAuth({
     additionalFields: {  // 自定义数据库中用户表的额外字段
       role: {
         type: "string",
-        required: true,
-        default: "user",
+        // default: "user",
       },
-    },
-    name: "",
+    }
   },
 
   secret: process.env.NUXT_BETTER_AUTH_SECRET!,
@@ -43,32 +43,19 @@ export const auth = betterAuth({
     joins: true,
   },
 
-  // routes: {
-  //   signUp: "/register",
-  //   signIn: "/login",
-  //   getSession: "/session",
-  //   signOut: "/logout",
-  // },
-
-  // // ✅ 核心：重写所有接口端点路径（表单提交API）
-  // endpoints: {
-  //   // 邮箱密码登录接口：默认 /sign-in/email → 改为 /login
-  //   signInEmail: {
-  //     path: "/login",
-  //   },
-  //   // 邮箱注册接口：默认 /sign-up/email → 改为 /register
-  //   signUpEmail: {
-  //     path: "/register",
-  //   },
-  //   // 退出登录
-  //   signOut: {
-  //     path: "/logout",
-  //   },
-  //   // 获取会话
-  //   getSession: {
-  //     path: "/session",
-  //   },
-  // },
+  plugins: [
+    emailOTP({
+      async sendVerificationOTP({ email, otp, type}) {
+        // 实现发送 OTP 到邮箱的逻辑
+        console.log(email, otp);
+        if(type === 'forget-password') {
+          console.log(email, otp);
+          // 发送忘记密码 OTP 到邮箱
+          await sendResetEmail(email, otp);
+        }
+      },
+    })
+  ]  
 });
 
 export type Session = typeof auth.$Infer.Session;
