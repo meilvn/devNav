@@ -1,20 +1,10 @@
 // 这是数据库种子文件，负责生成模拟数据用于测试
-import { drizzle } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client";
 import { seed } from "drizzle-seed";
 import * as schema from "./server/db/schema";
 import { auth } from "./server/auth";
+import { db } from "./server/utils/db";
 // 加载环境变量
 import "dotenv/config";
-
-const dbPath = process.env.DB_FILE_NAME!;
-const url = dbPath.startsWith("file:") ? dbPath : `file:${dbPath}`;
-
-const client = createClient({
-  url,
-});
-
-const db = drizzle(client, { schema });
 
 async function main() {
   // 模拟categories

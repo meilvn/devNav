@@ -1,6 +1,6 @@
 import { createAuthClient } from 'better-auth/vue';
 
-export default defineNuxtPlugin(({ $fetch }) => {
+export default defineNuxtPlugin((nuxtApp) => {
   const authClient = createAuthClient({
     baseURL: process.env.NUXT_PUBLIC_BETTER_AUTH_URL!,
   });

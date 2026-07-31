@@ -74,6 +74,11 @@ bun run preview
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
+# 环境变量都在.env文件中配置，如果要在模块中使用，需要全局安装dotenv模块，并在模块中引入import "dotenv/config";不然直接使用process.env会报错
+# 环境变量例如：
+# DB_FILE_NAME=./.data/sqlite.db
+
+
 # better-auth 用来自动处理用户认证、授权、会话管理等任务
 # 支持拓展和自定义，具体配置在/server/auth/index.ts中
 
@@ -89,5 +94,11 @@ await auth.signUp({
   password: '123456',
   role: 'user',
 })
+
+
+
+
+
+
 
 # 有几个问题未解决： 1、better-auth的默认路由没法修改
