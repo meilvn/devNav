@@ -11,7 +11,7 @@
                 <UFormField label="密码" name="password">
                     <UInput v-model="state.password" type="password" placeholder="••••••••" size="lg" class="w-full" />
                 </UFormField>
-                <UButton block size="xl" color="primary" type="submit" class="cursor-pointer">注册
+                <UButton block size="xl" color="primary" type="submit">注册
                 </UButton>
             </UForm>
         </UCard>

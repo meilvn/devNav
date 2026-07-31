@@ -4,7 +4,7 @@
             <UIcon name="i-material-symbols:pentagon-outline-rounded" class="w-8 h-8 rounded-md" />
             <UButton size="lg" :active="false" icon="material-symbols:bookmark-add-outline-sharp" color="neutral"
                 activeColor="primary" variant="outline" activeVariant="solid"
-                class="font-bold rounded-lg cursor-pointer" @click="handleBookmarkClick">
+                class="font-bold rounded-lg" @click="handleBookmarkClick">
             </UButton>
         </div>
         <div>

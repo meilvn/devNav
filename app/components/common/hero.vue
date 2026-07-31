@@ -10,7 +10,7 @@
             <UInput v-model="searchValue" @update:modelValue="search(searchValue)" @keyup.enter="search(searchValue)" icon="i-lucide-search" size="xl" variant="outline" class="w-[50%]" :ui="{ base: 'rounded-full border-subtle' }"
                 placeholder="搜索工具、框架、文档..." type="text">
                 <template v-if="searchValue?.length" #trailing>
-                    <UButton class="cursor-pointer" color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
+                    <UButton color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
                         @click="searchValue = ''; search(searchValue)" />
                 </template>
             </UInput>

@@ -29,3 +29,10 @@
     --radius-pill: 24px;
     --font-family: Inter, system-ui, sans-serif;
 }
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}

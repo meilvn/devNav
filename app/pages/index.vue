@@ -9,7 +9,7 @@
         variant="outline"
         activeVariant="solid"
         :active="currentCategory === -1"
-        class="font-bold rounded-full cursor-pointer"
+        class="font-bold rounded-full"
         @click="
           currentCategory = -1;
           switchCategory();

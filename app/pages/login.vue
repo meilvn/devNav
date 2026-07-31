@@ -75,7 +75,6 @@
               size="md"
               color="primary"
               variant="link"
-              class="cursor-pointer"
               >忘记密码？
             </UButton>
           </div>
@@ -86,7 +85,6 @@
               color="primary"
               :loading="isLoading"
               type="submit"
-              class="cursor-pointer"
               >登录
             </UButton>
           </div>
@@ -97,7 +95,7 @@
               size="lg"
               type="button"
               variant="link"
-              class="cursor-pointer p-0 font-bold"
+              class="p-0 font-bold"
               @click="navigateTo('/register')"
               >立即注册</UButton
             >

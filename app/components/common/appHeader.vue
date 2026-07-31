@@ -9,11 +9,10 @@
 
     <template #right>
 
-      <UColorModeButton class="cursor-pointer" />
+      <UColorModeButton />
 
       <UButton
         v-if="!isAuthenticated"
-        class="cursor-pointer"
         color="primary"
         variant="solid"
         >登录</UButton
