@@ -2,19 +2,15 @@
   <UHeader :ui="{ container: 'max-w-none' }" class="border-t border-slate-50">
     <template #title>
       <!-- <Logo class="h-6 w-auto" /> -->
-       logo
+      logo
     </template>
 
     <UNavigationMenu :items="items" />
 
     <template #right>
-
       <UColorModeButton />
 
-      <UButton
-        v-if="!isAuthenticated"
-        color="primary"
-        variant="solid"
+      <UButton v-if="!isAuthenticated" color="primary" variant="solid" @click="$router.push('/login')"
         >登录</UButton
       >
       <UPopover
@@ -24,19 +20,26 @@
         :content="{ side: 'bottom', align: 'end' }"
       >
         <UAvatar
-          src="https://github.com/benjamincanac.png"
+          :src="session.data?.user?.image"
           loading="lazy"
           class="cursor-pointer"
         />
         <template #content>
           <div class="py-1">
-            <button
+            <UButton
               v-for="item in menuItems"
+              :color="item.key === 'logout' ? 'error' : 'neutral'"
+              variant="link"
               :key="item.label"
-              class="w-full px-3 py-2 text-left text-sm text-default hover:bg-elevated cursor-pointer rounded-md"
+              class="w-full px-3 py-2 text-left text-sm cursor-pointer rounded-md"
+              @click="
+                item.key !== 'logout' && item.to
+                  ? $router.push(item.to)
+                  : $auth.signOut()
+              "
             >
               {{ item.label }}
-            </button>
+            </UButton>
           </div>
         </template>
       </UPopover>
@@ -44,9 +47,8 @@
   </UHeader>
 </template>
 <script setup lang="ts">
-
-const isAuthenticated = ref(true);
-
+const session = useAuthSession();
+const isAuthenticated = computed(() => !!session.value?.data?.user);
 const items = ref([
   {
     label: "首页",
@@ -62,18 +64,22 @@ const items = ref([
   },
 ]);
 
-const menuItems = ref([
-  {
-    label: "个人中心",
-    to: "/profile",
-  },
-  {
-    label: "设置",
-    to: "/settings",
-  },
-  {
-    label: "退出登录",
-    to: "/logout",
-  },
-]);
+const menuItems = computed(() => {
+  return [
+    {
+      label: "个人中心",
+      key: "userInfo",
+      to: "/user/info",
+    },
+    {
+      label: "设置",
+      key: "settings",
+      to: "/settings",
+    },
+    {
+      label: "退出登录",
+      key: "logout",
+    },
+  ];
+});
 </script>

@@ -45,9 +45,9 @@
   </div>
 </template>
 <script setup lang="ts">
-const { data: categorys } = useFetch("/api/categories");
+
+const categorys = useCategory();
 const { navigationList, pending, switchCategory } = useNavigation();
-console.log(navigationList.value);
 const currentCategory = ref(-1);
 
 useSeoMeta({

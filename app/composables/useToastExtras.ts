@@ -12,7 +12,7 @@ export const useToastExtras = () => {
         });
     }
 
-    const showSuccessToast = (title: string, description: string, options?: any) => {
+    const showSuccessToast = (title: string, description?: string, options?: any) => {
         toast.add({
             title,
             description,

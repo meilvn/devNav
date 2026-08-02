@@ -60,13 +60,7 @@
           </UFormField>
 
           <UFormField label="密码" name="password">
-            <UInput
-              v-model="state.password"
-              type="password"
-              placeholder="••••••••"
-              size="lg"
-              class="w-full"
-            />
+            <PasswordInput v-model="state.password" placeholder="••••••••" />
           </UFormField>
 
           <div class="flex justify-between items-center">
@@ -139,7 +133,13 @@ const onSubmit = async () => {
     if (error) {
       showErrorToast("登录失败", "请检查邮箱和密码是否正确");
     } else {
-      navigateTo("/");
+      const session = await auth.getSession();
+      const user = session.data?.user;
+      if (user?.role === 'admin') {
+        navigateTo("/admin");
+      } else {
+        navigateTo("/");
+      }
     }
   } catch (err: any) {
     isLoading.value = false;

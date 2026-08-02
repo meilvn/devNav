@@ -17,6 +17,9 @@ export const user = sqliteTable("user", {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
   role: text("role"),
+  signature: text("signature"),
+  gender: text("gender"),
+  birthDate: text("birth_date"),
 });
 
 export const session = sqliteTable(

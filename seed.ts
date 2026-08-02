@@ -40,6 +40,11 @@ async function mockCategories() {
       sort: 3,
       icon: "icon-default",
     },
+    {
+      name: "其他",
+      sort: 4,
+      icon: "icon-default",
+    }
   ]);
   // await seed(db as any, {categories: schema.categories}, {count: 10});
 }

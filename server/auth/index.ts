@@ -18,7 +18,19 @@ export const auth = betterAuth({
     additionalFields: {  // 自定义数据库中用户表的额外字段
       role: {
         type: "string",
-        // default: "user",
+        default: "user",
+      },
+      signature: {
+        type: "string",
+        default: "",
+      },
+      gender: {
+        type: "string",
+        default: "",
+      },
+      birthDate: {
+        type: "string",
+        default: null,
       },
     }
   },
@@ -45,11 +57,10 @@ export const auth = betterAuth({
 
   plugins: [
     emailOTP({
+      overrideDefaultEmailVerification: true,
       async sendVerificationOTP({ email, otp, type}) {
         // 实现发送 OTP 到邮箱的逻辑
-        console.log(email, otp);
         if(type === 'forget-password') {
-          console.log(email, otp);
           // 发送忘记密码 OTP 到邮箱
           await sendResetEmail(email, otp);
         }

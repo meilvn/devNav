@@ -13,7 +13,7 @@ export async function sendResetEmail(email: string, otp: string) {
         html: `
             <p>你好，${email}</p>
             <p>你的重置密码验证码是：<strong>${otp}</strong></p>
-            <p>请在10分钟内输入验证码。</p>
+            <p>请在5分钟内输入验证码。</p>
         `,
     })
 }
