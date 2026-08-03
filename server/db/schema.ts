@@ -36,6 +36,15 @@ export const navigations = sqliteTable(
     url: text("url").notNull(),
     status: integer("status").default(navigationStatus.PENDING),
     submitter: text("submitter").notNull(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)   // 内部使用sqlite的函数用于生成当前时间戳，单位为毫秒，并塞入createdAt字段
+      .notNull(),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+      .$default(() => sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+    reviewer: text("reviewer"),
+    reviewTime: integer("review_time", { mode: "timestamp_ms" }),
   },
   (table) => [check("status_status", sql`${table.status} IN (0, 1, 2)`)],
 );

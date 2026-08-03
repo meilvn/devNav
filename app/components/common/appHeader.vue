@@ -47,8 +47,8 @@
   </UHeader>
 </template>
 <script setup lang="ts">
-const session = useAuthSession();
-const isAuthenticated = computed(() => !!session.value?.data?.user);
+const { data: session } = await useAuthSession();
+const isAuthenticated = computed(() => !!session.value?.user);
 const items = ref([
   {
     label: "首页",

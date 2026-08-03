@@ -1,4 +1,4 @@
 export function useAuthSession() {
   const auth: any = useAuth();
-  return auth.useSession();
+  return auth.useSession(useFetch);
 }

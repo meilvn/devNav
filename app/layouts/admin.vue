@@ -77,11 +77,13 @@
 import type { DropdownMenuItem, NavigationMenuItem } from "@nuxt/ui";
 
 const open = ref(true);
-const session = useAuthSession();
-const user = computed(() => {
-  return session.value.data?.user;
-});
 const auth = useAuth();
+const user = computed(() => {
+  // return session.value?.user;
+  return {
+    name: 'admin',
+  }
+});
 
 const userItems = computed<DropdownMenuItem[][]>(() => [
   [

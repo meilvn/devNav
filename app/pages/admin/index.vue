@@ -10,7 +10,14 @@
       </UCard>
     </div>
     <div class="mt-4">
-      <UTable :columns="columns" :data="tblData" />
+      <div class="flex justify-end py-3.5 border-b border-accented">
+        <UTooltip text="刷新" :content="{side: 'top'}">
+          <UButton color="neutral" size="lg" variant="outline" icon="i-lucide-rotate-cw" @click="refresh()" />
+        </UTooltip>
+      </div>
+      <div v-loading="pending">
+        <UTable :columns="columns" :data="tblData" />
+      </div>
     </div>
   </NuxtLayout>
 </template>
@@ -22,7 +29,9 @@ definePageMeta({
   layout: false,
 });
 
-const tblData = ref([]);
+const { data: tblData, refresh, pending } = useFetch('/api/navigations', {
+  method: 'GET',
+});
 
 const counts = [
   {
@@ -44,7 +53,7 @@ const counts = [
 ];
 
 // 待审核的导航
-const columns: TableColumn<Navigation>[] = [
+const columns: TableColumn<any>[] = [
   {
     accessorKey: "title",
     header: "标题",

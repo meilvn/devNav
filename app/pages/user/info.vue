@@ -73,7 +73,7 @@
 import { CalendarDate } from "@internationalized/date";
 
 const auth = useAuth();
-const session = useAuthSession();
+const { data: session } = await useAuthSession();
 const { showErrorToast, showSuccessToast } = useToastExtras();
 
 const items = ref([
@@ -94,7 +94,7 @@ const isUploading = ref(false);
 
 onMounted(() => {
   const {
-    data: { user },
+    user,
   } = session.value || {};
   if (user) {
     Object.keys(state).forEach((key: string) => {

@@ -124,7 +124,7 @@ const isLoading = ref(false);
 const onSubmit = async () => {
   isLoading.value = true;
   try {
-    const { error } = await auth.signIn.email({
+    const { data, error } = await auth.signIn.email({
       email: state.email,
       password: state.password,
       rememberMe: state.remember,
@@ -133,8 +133,7 @@ const onSubmit = async () => {
     if (error) {
       showErrorToast("登录失败", "请检查邮箱和密码是否正确");
     } else {
-      const session = await auth.getSession();
-      const user = session.data?.user;
+      const user = data.user;
       if (user?.role === 'admin') {
         navigateTo("/admin");
       } else {
