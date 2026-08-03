@@ -23,7 +23,6 @@
 </template>
 <script setup lang="ts">
 import type { TableColumn } from "@nuxt/ui";
-import type { Navigation } from "~/types/navigation";
 
 definePageMeta({
   layout: false,
